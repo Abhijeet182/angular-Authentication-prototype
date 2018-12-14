@@ -1,0 +1,12 @@
+<form [formGroup]="profileForm" (ngSubmit)="login()">
+    <div class="group">          
+        <label for="user" class="label">Email</label>
+        <input type="text" formControlName="email" class="form-control" ng-model="user.email"  autocomplete="off" ng-required="true">
+     </div>  
+     <div class="group">          
+            <label for="user" class="label">Password</label>
+            <input type="text" formControlName="password" class="form-control" ng-model="user.password"  autocomplete="off" ng-required="true">
+    </div>
+    
+    <button type="submit" [disabled]="!profileForm.valid" class="btn btn-primary">Sign-In</button>
+</form>
