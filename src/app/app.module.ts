@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { logging } from 'protractor';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 @NgModule({
   declarations: [
