@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+import { Configuration } from "../app/app.constant";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignupapiService {
-
-  private _url: string = "http://localhost:4001/demo/api/v1/user/signup"
-  constructor(private _http: HttpClient){}
+  private actionUrl: string;
+  constructor(private _http: HttpClient , private Configuration: Configuration){
+    this.actionUrl = Configuration.serverWithApiUrl + 'signup';
+  }
 getRequest(data:any,options:string){
-  return  this._http.post(this._url,data)
+  return  this._http.post(this.actionUrl,data)
 }
 }

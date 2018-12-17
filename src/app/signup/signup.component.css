@@ -17,7 +17,7 @@
     cursor: default;
   }
   .c1{
-      background-color: #d93a3e;
+       color: #d93a3e;
   }
   .c2{
       text-align: center;
@@ -26,3 +26,4 @@
       margin: 35px;
       padding: 55px;
   }
+  

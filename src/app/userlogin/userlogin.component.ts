@@ -3,6 +3,7 @@ import { EventManager } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { Router } from "@angular/router";
 
 @Component({
 
@@ -16,9 +17,12 @@ export class UserloginComponent implements OnInit {
   public profileForm: FormGroup;
   public controlsdata: any;
   public dataSource: any;
+  submitted = false;
   constructor(
-    public ApiService: ApiService
+    public ApiService: ApiService,
+    private router: Router
   ) { }
+  get f() { return this.profileForm.controls; }
 
   ngOnInit() {
 
@@ -29,7 +33,7 @@ export class UserloginComponent implements OnInit {
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
+        Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})')
       ]))
 
     });
@@ -37,14 +41,22 @@ export class UserloginComponent implements OnInit {
   }
 
   login() {
-    this.ApiService.getRequest(this.profileForm.value, '')
-      .subscribe(data => {
-        console.log(data);
-        this.dataSource = data;
-        if (this.dataSource.statusCode == 1)
-          alert('Login Success, Welcome \n' + JSON.stringify(this.profileForm.value.email))
-        else
-          alert("Login Failed");
-      });
+    this.submitted = true;
+    if (this.profileForm.invalid) {
+      console.log('Login invalid');
+      return;
+    }
+    else {
+      this.ApiService.getRequest(this.profileForm.value, '')
+        .subscribe(data => {
+          console.log(data);
+          this.dataSource = data;
+          if (this.dataSource.statusCode == 1)
+            this.router.navigateByUrl('/dashboard');
+          else
+            alert("Login Failed");
+        });
+    }
   }
+
 }

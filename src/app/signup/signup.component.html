@@ -1,16 +1,15 @@
 <div class="container">
     <h2 class="c2">Registration</h2>
     <div class="jumbotron c3">
-
-
         <form [formGroup]="signupForm" (ngSubmit)="signup()">
             <div class="group">
-                <label for="user" class="label">First Name</label>
+                <label for="user"  class="label">First Name</label>
                 <input type="text" formControlName="fname" class="form-control" ng-model="user.fname" autocomplete="off"
                     ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.fname.errors }">
                 <div *ngIf="submitted && f.fname.errors" class="c1">
-                    <div *ngIf="f.fname.errors.required">First_name is required</div>
-                    <div *ngIf="f.fname.errors.minlength">Minimum 4 character</div>
+                    <div *ngIf="f.fname.errors.required">First Name is required</div>
+                    <div *ngIf="!f.fname.errors.pattern && f.fname.errors.minlength">Minimum 4 character</div>
+                    <div *ngIf="f.fname.errors.pattern">First Name is invaild</div>
                 </div>
             </div>
             <div class="group">
@@ -18,8 +17,9 @@
                 <input type="text" formControlName="lname" class="form-control" ng-model="user.lname" autocomplete="off"
                     ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.lname.errors }">
                 <div *ngIf="submitted && f.lname.errors" class="c1">
-                    <div *ngIf="f.lname.errors.required">Last_name is required</div>
-                    <div *ngIf="f.lname.errors.minlength">Minimum 4 character</div>
+                    <div *ngIf="f.lname.errors.required">Last Name is required</div>
+                    <div *ngIf="!f.lname.errors.pattern && f.lname.errors.minlength">Minimum 4 character</div>
+                    <div *ngIf="f.lname.errors.pattern">Last Name is invaild</div>
                 </div>
             </div>
             <div class="group">
@@ -28,7 +28,7 @@
                     ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                 <div *ngIf="submitted && f.email.errors" class="c1">
                     <div *ngIf="f.email.errors.required">Email is required</div>
-                    <div *ngIf="f.email.errors.pattern">Enter vaild pattern</div>
+                    <div *ngIf="f.email.errors.pattern">Enter vaild Email</div>
                 </div>
             </div>
             <div class="group">
@@ -36,8 +36,10 @@
                 <input type="text" formControlName="mob" class="form-control" ng-model="user.mob" autocomplete="off"
                     ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.mob.errors }">
                 <div *ngIf="submitted && f.mob.errors" class="c1">
-                    <div *ngIf="f.mob.errors.required">First_name is required</div>
-                    <div *ngIf="f.mob.errors.minlength">Minimum 10 digits</div>
+                    <div *ngIf="f.mob.errors.required">Mobile Number is required</div>
+                    <div *ngIf="f.mob.errors.pattern">Please use digits only</div>
+                    <div *ngIf="!f.mob.errors.pattern && f.mob.errors.minlength">Please Enter mobile number of 10 digits. </div>
+                    <div *ngIf="f.mob.errors.maxlength">Please Enter mobile number of 10 digits.</div>
                 </div>
             </div>
             <div class="group">
@@ -51,7 +53,7 @@
             </div>
             <div class="group">
                 <label for="user" class="label">Confirm Password</label>
-                <input type="text" formControlName="cpassword" class="form-control" ng-model="user.cpassword"
+                <input type="text" formControlName="confirmPassword" class="form-control" ng-model="user.cpassword"
                     autocomplete="off" ng-required="true">
             </div>
             <br>

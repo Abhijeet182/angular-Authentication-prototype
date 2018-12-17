@@ -5,14 +5,26 @@
             <div class="group">
                 <label for="user" class="label">Email</label>
                 <input type="text" formControlName="email" class="form-control" ng-model="user.email" autocomplete="off"
-                    ng-required="true">
+                    ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <div *ngIf="submitted && f.email.errors" class="c1">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.pattern">Enter vaild Email </div>
+                </div>
             </div>
             <div class="group">
                 <label for="user" class="label">Password</label>
                 <input type="text" formControlName="password" class="form-control" ng-model="user.password"
-                    autocomplete="off" ng-required="true">
+                    autocomplete="off" ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <div *ngIf="submitted && f.password.errors" class="c1">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.pattern">Enter alpha Nummeric password</div>
+                </div>
             </div>
-            <button type="submit" [disabled]="!profileForm.valid" class="btn btn-primary">Sign-In</button>
+            <button type="submit" class="btn btn-primary">Sign-In</button>
         </form>
+        <div>
+            <button (click)="socialSignIn('google')" class="loginBtn loginBtn--google"> Login with Google</button>
+            <button (click)="socialSignIn('facebook')" class="loginBtn loginBtn--facebook">Login with Facebook</button>
+        </div>
     </div>
 </div>
