@@ -25,19 +25,16 @@ export class UserloginComponent implements OnInit {
   get f() { return this.profileForm.controls; }
 
   ngOnInit() {
-
     this.profileForm = new FormGroup({
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')
+        Validators.pattern('(([a-zA-Z0-9\-?\.?]+)@(([a-zA-Z0-9\-_]+\.)+)([a-zA-Z]{2,4}))+$')
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})')
       ]))
-
     });
-
   }
 
   login() {
@@ -51,8 +48,12 @@ export class UserloginComponent implements OnInit {
         .subscribe(data => {
           console.log(data);
           this.dataSource = data;
-          if (this.dataSource.statusCode == 1)
+          if (this.dataSource.statusCode == 1) {
+            localStorage.setItem('fname', this.dataSource.responseData.params.fname);
+            localStorage.setItem('lname', this.dataSource.responseData.params.lname);
+
             this.router.navigateByUrl('/dashboard');
+          }
           else
             alert("Login Failed");
         });

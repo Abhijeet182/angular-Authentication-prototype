@@ -4,7 +4,7 @@ import { NgForm, AbstractControl } from '@angular/forms';
 import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 import { SignupapiService } from '../signupapi.service';
 import { Router } from "@angular/router";
-import { CustomValidators } from '../custom-validators';
+
 
 @Component({
   selector: 'app-signup',
@@ -17,6 +17,9 @@ export class SignupComponent implements OnInit {
   public signupForm: FormGroup;
   public controlsdata: any;
   public dataSource: any;
+  public p1: any;
+  public p2: any;
+  public user: any;
   submitted = false;
   constructor(
     public SignupService: SignupapiService,
@@ -45,7 +48,7 @@ export class SignupComponent implements OnInit {
       ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')
+        Validators.pattern('(([a-zA-Z0-9\-?\.?]+)@(([a-zA-Z0-9\-_]+\.)+)([a-zA-Z]{2,4}))+$')
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
@@ -55,6 +58,18 @@ export class SignupComponent implements OnInit {
       confirmPassword: new FormControl('')
     });
   }
+
+  checkPass(type: string) {
+    if (this.signupForm.value.password && this.signupForm.value.confirmPassword) {
+      if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
+        alert("password not match");
+        return false;
+      }
+      return true;
+    }
+    return false;
+  }
+
   signup() {
     this.submitted = true;
     if (this.signupForm.invalid) {
@@ -62,17 +77,19 @@ export class SignupComponent implements OnInit {
       return;
     }
     else {
-      this.SignupService.getRequest(this.signupForm.value, '')
-        .subscribe(data => {
-          console.log(data);
-          this.dataSource = data;
-          if (this.dataSource.statusCode == 1) {
-            alert('Successful register with us, login with \n' + JSON.stringify(this.signupForm.value.email))
-            this.router.navigateByUrl('/login');
-          }
-          else
-            alert("Registration Failed");
-        });
+      if (this.checkPass('')) {
+        this.SignupService.getRequest(this.signupForm.value, '')
+          .subscribe(data => {
+            console.log(data);
+            this.dataSource = data;
+            if (this.dataSource.statusCode == 1) {
+              alert('Successful register with us, login with \n' + JSON.stringify(this.signupForm.value.email))
+              this.router.navigateByUrl('/login');
+            }
+            else
+              alert("Registration Failed");
+          });
+      }
     }
 
 

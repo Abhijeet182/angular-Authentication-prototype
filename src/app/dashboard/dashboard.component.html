@@ -1,7 +1,6 @@
+
 <div class="container">
-  <p>Welcome to the Dashboard:<br>
-    <a routerLink="/login" class="btn btn-info btn-lg">
-      <span class="glyphicon glyphicon-log-out"></span> Log out
-    </a>
-  </p> 
+
+  <p class="c1">Welcome  {{fname}} {{lname}} to the Dashboard:</p>
+  <a routerLink="/login"><button class="btn btn-info btn-lg glyphicon glyphicon-log-out" (click)="logout()">logout</button></a>
 </div>

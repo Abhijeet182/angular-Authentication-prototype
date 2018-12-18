@@ -1,6 +1,7 @@
 <div class="container">
     <h2 class="c2">User Login</h2>
     <div class="jumbotron c3">
+            <button class="btn btn-outline-success" type="button"><a routerLink="/signup">Not yet register?Just signup</a></button>
         <form [formGroup]="profileForm" (ngSubmit)="login()">
             <div class="group">
                 <label for="user" class="label">Email</label>
@@ -13,7 +14,7 @@
             </div>
             <div class="group">
                 <label for="user" class="label">Password</label>
-                <input type="text" formControlName="password" class="form-control" ng-model="user.password"
+                <input type="password" formControlName="password" class="form-control" ng-model="user.password"
                     autocomplete="off" ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                 <div *ngIf="submitted && f.password.errors" class="c1">
                     <div *ngIf="f.password.errors.required">Password is required</div>

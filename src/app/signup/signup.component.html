@@ -44,8 +44,8 @@
             </div>
             <div class="group">
                 <label for="user" class="label">Password</label>
-                <input type="text" formControlName="password" class="form-control" ng-model="user.password"
-                    autocomplete="off" ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <input type="password" formControlName="password" id="p1" class="form-control" ng-model="user.password"
+                    autocomplete="off" (blur)="checkPass('pass');" ng-required="true" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                 <div *ngIf="submitted && f.password.errors" class="c1">
                     <div *ngIf="f.password.errors.required">Password is required</div>
                     <div *ngIf="f.password.errors.pattern">Enter alpha Nummeric password</div>
@@ -53,11 +53,13 @@
             </div>
             <div class="group">
                 <label for="user" class="label">Confirm Password</label>
-                <input type="text" formControlName="confirmPassword" class="form-control" ng-model="user.cpassword"
-                    autocomplete="off" ng-required="true">
+                <input type="password" formControlName="confirmPassword" id="p2" class="form-control" ng-model="user.confirmPassword"
+                    autocomplete="off" ng-required="true" (blur)="checkPass('c_pass');">
+                    
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
+        <br><button class="btn btn-outline-success" type="button"><a routerLink="/login">Already signup? Just Login</a></button>
     </div>
 </div>
