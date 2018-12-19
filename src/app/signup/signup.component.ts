@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventManager } from '@angular/platform-browser';
-import { NgForm, AbstractControl } from '@angular/forms';
-import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { SignupapiService } from '../signupapi.service';
 import { Router } from "@angular/router";
 
@@ -12,6 +10,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./signup.component.css'],
   providers: [SignupapiService]
 })
+
 export class SignupComponent implements OnInit {
   api: any[] = null;
   public signupForm: FormGroup;
@@ -26,6 +25,7 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) { }
+
   get f() { return this.signupForm.controls; }
 
   ngOnInit() {
@@ -48,14 +48,18 @@ export class SignupComponent implements OnInit {
       ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('(([a-zA-Z0-9\-?\.?]+)@(([a-zA-Z0-9\-_]+\.)+)([a-zA-Z]{2,4}))+$')
+        Validators.pattern('^[A-Z0-9a-z_]{3,}@[A-Z0-9a-z]{3,}[.]{1}[A-Za-z.]{2,6}$')
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})'),
         Validators.minLength(4)
       ])),
-      confirmPassword: new FormControl('')
+      confirmPassword: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})'),
+        Validators.minLength(4)
+      ]))
     });
   }
 
@@ -80,7 +84,6 @@ export class SignupComponent implements OnInit {
       if (this.checkPass('')) {
         this.SignupService.getRequest(this.signupForm.value, '')
           .subscribe(data => {
-            console.log(data);
             this.dataSource = data;
             if (this.dataSource.statusCode == 1) {
               alert('Successful register with us, login with \n' + JSON.stringify(this.signupForm.value.email))
@@ -91,8 +94,5 @@ export class SignupComponent implements OnInit {
           });
       }
     }
-
-
   }
-
 }

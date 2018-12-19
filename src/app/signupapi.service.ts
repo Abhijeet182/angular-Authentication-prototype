@@ -7,10 +7,10 @@ import { Configuration } from "../app/app.constant";
 })
 export class SignupapiService {
   private actionUrl: string;
-  constructor(private _http: HttpClient , private Configuration: Configuration){
+  constructor(private _http: HttpClient, private Configuration: Configuration) {
     this.actionUrl = Configuration.serverWithApiUrl + 'signup';
   }
-getRequest(data:any,options:string){
-  return  this._http.post(this.actionUrl,data)
-}
+  getRequest(data: any, options: string) {
+    return this._http.post(this.actionUrl, data)
+  }
 }

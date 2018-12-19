@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Configuration } from './app.constant';
+import { socialconfig } from "../app/app.constant";
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,7 @@ import { Configuration } from './app.constant';
       }
     ])
   ],
-  providers: [Configuration],
+  providers: [Configuration, socialconfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

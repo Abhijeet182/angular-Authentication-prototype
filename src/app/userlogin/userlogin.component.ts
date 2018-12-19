@@ -4,13 +4,14 @@ import { NgForm } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { Router } from "@angular/router";
+import { GauthService } from "../gauth.service";
 
 @Component({
 
   selector: 'app-userlogin',
   templateUrl: './userlogin.component.html',
   styleUrls: ['./userlogin.component.css'],
-  providers: [ApiService]
+  providers: [ApiService, GauthService]
 })
 export class UserloginComponent implements OnInit {
   api: any[] = null;
@@ -20,7 +21,8 @@ export class UserloginComponent implements OnInit {
   submitted = false;
   constructor(
     public ApiService: ApiService,
-    private router: Router
+    private router: Router,
+    public GauthService: GauthService
   ) { }
   get f() { return this.profileForm.controls; }
 
@@ -28,7 +30,7 @@ export class UserloginComponent implements OnInit {
     this.profileForm = new FormGroup({
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('(([a-zA-Z0-9\-?\.?]+)@(([a-zA-Z0-9\-_]+\.)+)([a-zA-Z]{2,4}))+$')
+        Validators.pattern('^[A-Z0-9a-z_]{3,}@[A-Z0-9a-z]{3,}[.]{1}[A-Za-z.]{2,6}$')
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,
@@ -36,7 +38,14 @@ export class UserloginComponent implements OnInit {
       ]))
     });
   }
-
+  google() {
+    this.GauthService.getRequest()
+      .subscribe(data => {
+        console.log(JSON.stringify(data));
+      }, (error) => {
+        console.log(error);
+      })
+  }
   login() {
     this.submitted = true;
     if (this.profileForm.invalid) {

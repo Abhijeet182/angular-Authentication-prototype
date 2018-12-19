@@ -10,7 +10,7 @@ export class GauthService {
   constructor(private _http: HttpClient, private socialconfig: socialconfig) {
     this.actionUrl = socialconfig.serverWithApiUrl + 'google';
   }
-  getRequest(data: any, options: string) {
-    return this._http.post(this.actionUrl, data)
+  getRequest() {
+    return this._http.get(this.actionUrl)
   }
 }
