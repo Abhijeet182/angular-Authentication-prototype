@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { SignupapiService } from '../signupapi.service';
 import { Router } from "@angular/router";
+import swal from "sweetalert";
 
 
 @Component({
@@ -22,7 +23,6 @@ export class SignupComponent implements OnInit {
   submitted = false;
   constructor(
     public SignupService: SignupapiService,
-    private fb: FormBuilder,
     private router: Router
   ) { }
 
@@ -86,11 +86,12 @@ export class SignupComponent implements OnInit {
           .subscribe(data => {
             this.dataSource = data;
             if (this.dataSource.statusCode == 1) {
-              alert('Successful register with us, login with \n' + JSON.stringify(this.signupForm.value.email))
+              // alert('Successful register with us, login with \n' + JSON.stringify(this.signupForm.value.email))
+              swal("Congratulations!", "You are successfully register with us!", "success")
               this.router.navigateByUrl('/login');
             }
             else
-              alert("Registration Failed");
+            swal("Registration failed!")
           });
       }
     }

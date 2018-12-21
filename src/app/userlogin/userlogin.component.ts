@@ -5,6 +5,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { Router } from "@angular/router";
 import { GauthService } from "../gauth.service";
+import swal from "sweetalert";
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
 
@@ -22,10 +25,12 @@ export class UserloginComponent implements OnInit {
   constructor(
     public ApiService: ApiService,
     private router: Router,
-    public GauthService: GauthService
+    public GauthService: GauthService,
+    private toastr: ToastrService
   ) { }
   get f() { return this.profileForm.controls; }
 
+  
   ngOnInit() {
     this.profileForm = new FormGroup({
       email: new FormControl('', Validators.compose([
@@ -60,11 +65,14 @@ export class UserloginComponent implements OnInit {
           if (this.dataSource.statusCode == 1) {
             localStorage.setItem('fname', this.dataSource.responseData.params.fname);
             localStorage.setItem('lname', this.dataSource.responseData.params.lname);
-
+            localStorage.setItem('email', this.dataSource.responseData.params.email);
             this.router.navigateByUrl('/dashboard');
           }
           else
-            alert("Login Failed");
+          {
+            this.toastr.error('Invaild Credentials!');
+            swal("Oops!", "Email not exist in our database!!", "error");
+          }
         });
     }
   }

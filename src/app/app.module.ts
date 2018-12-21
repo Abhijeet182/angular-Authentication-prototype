@@ -12,6 +12,9 @@ import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Configuration } from './app.constant';
 import { socialconfig } from "../app/app.constant";
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,8 @@ import { socialconfig } from "../app/app.constant";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     ReactiveFormsModule,
     RouterModule.forRoot([
       {

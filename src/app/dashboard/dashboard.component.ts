@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +10,9 @@ import { Router } from "@angular/router";
 export class DashboardComponent implements OnInit {
   fname: any
   lname: any
+  email: any
   cuser: any
-  constructor(private router: Router) {
+  constructor(private router: Router,private toastr: ToastrService) {
     this.fname = localStorage.getItem('fname');
 
 
@@ -19,27 +21,32 @@ export class DashboardComponent implements OnInit {
     } else {
       this.fname = localStorage.getItem('fname');
       this.lname = localStorage.getItem('lname');
+      this.email = localStorage.getItem('email');
     }
   }
   logout() {
     localStorage.setItem('fname', null);
     localStorage.setItem('lname', null);
+    localStorage.setItem('email', null);
   }
 
   ngOnInit() {
     try {
       this.cuser = this.fname;
       if (this.cuser) {
-        alert(`welcome ${this.cuser}`);
+        swal(`welcome ${this.cuser}`);
+        this.toastr.success(`welcome ${this.email}`);
       } else {
         this.unauthUser();
+        this.toastr.error('You have not valid access, please login to continue');
       }
     } catch (ex) {
       this.unauthUser();
+      this.toastr.error('You have not valid access, please login to continue');
     }
   }
   unauthUser() {
-    alert("You have not valid access, please login to continue");
+    this.toastr.error('You have not valid access, please login to continue');
     this.router.navigate(['/login']);
   }
 }
