@@ -14,6 +14,8 @@ import { Configuration } from './app.constant';
 import { socialconfig } from "../app/app.constant";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavComponent } from './nav/nav.component';
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
   declarations: [
@@ -21,14 +23,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserloginComponent,
     HomeComponent,
     SignupComponent,
-    DashboardComponent
+    DashboardComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule, // required animations module
+    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -46,11 +49,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       },
       {
         path: 'dashboard',
-        component: DashboardComponent
+        canActivate:[AuthGuard],
+        component: DashboardComponent,
       }
     ])
   ],
-  providers: [Configuration, socialconfig],
+  providers: [Configuration, socialconfig,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

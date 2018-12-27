@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { SignupapiService } from '../signupapi.service';
 import { Router } from "@angular/router";
 import swal from "sweetalert";
@@ -17,8 +17,6 @@ export class SignupComponent implements OnInit {
   public signupForm: FormGroup;
   public controlsdata: any;
   public dataSource: any;
-  public p1: any;
-  public p2: any;
   public user: any;
   submitted = false;
   constructor(
@@ -66,7 +64,7 @@ export class SignupComponent implements OnInit {
   checkPass(type: string) {
     if (this.signupForm.value.password && this.signupForm.value.confirmPassword) {
       if (this.signupForm.value.password !== this.signupForm.value.confirmPassword) {
-        alert("password not match");
+        swal("Password did'nt match!!");
         return false;
       }
       return true;
@@ -86,12 +84,11 @@ export class SignupComponent implements OnInit {
           .subscribe(data => {
             this.dataSource = data;
             if (this.dataSource.statusCode == 1) {
-              // alert('Successful register with us, login with \n' + JSON.stringify(this.signupForm.value.email))
               swal("Congratulations!", "You are successfully register with us!", "success")
               this.router.navigateByUrl('/login');
             }
             else
-            swal("Registration failed!")
+              swal("Registration failed!");
           });
       }
     }

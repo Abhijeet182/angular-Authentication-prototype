@@ -19,6 +19,9 @@
   .c1{
     color: #d93a3e;
 }
+.c2{
+  text-align: center;
+}
 /* Facebook */
 .loginBtn--facebook {
   background-color: #4C69BA;
