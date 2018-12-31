@@ -11,3 +11,8 @@ export class socialconfig{
     public apiUrl = 'demo/api/v1/userlogin/';
     public serverWithApiUrl = this.server + this.apiUrl;
 }
+export class apidata{
+    public server = 'https://jsonplaceholder.typicode.com/';
+    public apiUrl = 'todos';
+    public serverWithApiUrl = this.server + this.apiUrl;
+}

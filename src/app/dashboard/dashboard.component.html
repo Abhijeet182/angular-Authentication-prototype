@@ -1,5 +1,59 @@
 <div class="container">
 
-  <p class="c1">Welcome {{fname}} {{lname}} to the Dashboard:</p>
-  <a routerLink="/login"><button class="btn btn-info btn-lg glyphicon glyphicon-log-out" (click)="logout()">logout</button></a>
+  <p class="c1">Static Data</p>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!--  Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Column -->
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+
+      <!-- Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>
+
+<p class="c1">Dynamic data from api</p>
+
+<div class="container">
+  <table *ngIf="apilist">
+    <tr>
+      <th>UserId</th>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Completed</th>
+    </tr>
+
+    <tr *ngFor="let list of apilist">
+      <td> {{list.userId}} </td>
+      <td> {{list.id}} </td>
+      <td> {{list.title}} </td>
+      <td> {{list.completed}} </td>
+    </tr>
+  </table>
+</div>
+
