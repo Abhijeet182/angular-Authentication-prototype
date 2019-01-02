@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { ApidataService } from '../apidata.service';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { DataServiceService } from '../data-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,29 +8,68 @@ import { ApidataService } from '../apidata.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumn: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   api: any[] = null;
   apilist: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private apidata: ApidataService) {
-    this.apidata.getEmployee().subscribe((response) => {
 
-      this.apilist = response as string[];
-      console.log(this.apilist, "jhkf");
-    }, (error) => {
-      console.log(error);
+  MyDataSource: any;
+  displayedColumns = ['id', 'userId', 'title', 'completed'];
 
-    })
-    console.log(this.api);
+  @ViewChild(MatSort) sort: MatSort;
+
+
+  constructor(private dataService: DataServiceService ) {
   }
 
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+    this.renderDataTable();
+  }
+
+  renderDataTable(){
+    this.dataService.getAllTodos()
+      .subscribe(
+        res => {
+          this.MyDataSource = new MatTableDataSource();
+          this.MyDataSource.data = res;
+          this.MyDataSource.sort = this.sort;
+          this.MyDataSource.paginator = this.paginator;
+          console.log(this.MyDataSource.data);
+        },
+        error => {
+          console.log('There was an error while retrieving Todos !!!' + error);
+        });
+  } 
+  filter(searchstring: string)
+  {
+    searchstring = searchstring.trim();
+    searchstring = searchstring.toLowerCase();
+    this.MyDataSource.filter = searchstring;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export interface PeriodicElement {
   name: string;

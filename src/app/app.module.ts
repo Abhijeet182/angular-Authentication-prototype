@@ -18,6 +18,7 @@ import { NavComponent } from './nav/nav.component';
 import { ApidataService } from "./apidata.service";
 import { AuthGuard } from "./auth.guard";
 import { apidata } from "../app/app.constant";
+
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -59,6 +60,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
+import { DataServiceService } from './data-service.service';
 
 @NgModule({
   declarations: [
@@ -136,7 +138,7 @@ import {CdkTreeModule} from '@angular/cdk/tree';
       },
     ])
   ],
-  providers: [Configuration, socialconfig,AuthGuard,ApidataService,apidata],
+  providers: [Configuration, socialconfig,AuthGuard,ApidataService,apidata,DataServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
